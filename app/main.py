@@ -20,4 +20,4 @@ def health() -> dict[str, str]:
 
 @app.get("/hello/{name}", response_model=Greeting)
 def hello(name: str) -> Greeting:
-    return Greeting(message=f"Hello, {name}!")
+    return Greeting(message=f"Hello, {name} and second name!")

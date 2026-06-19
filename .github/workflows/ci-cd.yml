@@ -11,11 +11,11 @@ on:
       - main
 
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository }}/fastapi-demo
+  IMAGE_NAME: ghcr.io/${{ github.repository }}/fastapi-app
 
 jobs:
   test:
-    name: Test Python app
+    name: Validate Python app
     runs-on: ubuntu-latest
 
     steps:
@@ -31,11 +31,22 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements-dev.txt
 
+      - name: Run Ruff lint
+        run: ruff check .
+
+      - name: Check Ruff formatting
+        run: ruff format --check .
+
       - name: Run tests
         run: pytest
 
+      - name: Audit Python dependencies
+        uses: pypa/gh-action-pip-audit@v1.1.0
+        with:
+          inputs: requirements-dev.txt
+
   docker:
-    name: Build and publish Docker image
+    name: Validate and publish Docker image
     runs-on: ubuntu-latest
     needs: test
     permissions:
@@ -49,14 +60,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to GitHub Container Registry
-        if: github.event_name == 'push'
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
@@ -68,10 +71,43 @@ jobs:
             type=ref,event=tag
             type=raw,value=latest,enable={{is_default_branch}}
 
-      - name: Build Docker image
+      - name: Build Docker image for validation
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: ${{ github.event_name == 'push' }}
+          load: true
+          tags: fastapi-app:ci
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Smoke test Docker image
+        run: |
+          docker run --rm -d --name fastapi-app-ci -p 8000:8000 fastapi-app:ci
+          trap 'docker stop fastapi-app-ci' EXIT
+
+          for attempt in {1..10}; do
+            if curl -fsS http://127.0.0.1:8000/health; then
+              exit 0
+            fi
+
+            sleep 1
+          done
+
+          docker logs fastapi-app-ci
+          exit 1
+
+      - name: Log in to GitHub Container Registry
+        if: github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Docker image
+        if: github.event_name == 'push'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

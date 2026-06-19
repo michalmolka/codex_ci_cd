@@ -46,6 +46,11 @@ The workflow in `.github/workflows/ci-cd.yml` does two things:
 2. Builds the Docker image, starts it, and checks `/health`.
 3. Publishes the image to GitHub Container Registry on `push` events.
 
+It runs automatically for pull requests targeting `main`, pushes to `main`, and `v*.*.*` tags.
+It can also be started manually from GitHub Actions with `workflow_dispatch`. Manual runs validate
+by default; set `publish_image` to `true` when you intentionally want that manual run to publish to
+GHCR.
+
 Image name:
 
 ```text

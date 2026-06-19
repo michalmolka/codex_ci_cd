@@ -3,9 +3,9 @@ from pydantic import BaseModel
 
 
 app = FastAPI(
-    title="FastAPI CI/CD Demo",
+    title="FastAPI CI/CD App",
     version="0.1.0",
-    description="Small FastAPI service used to demonstrate Docker-based CI/CD.",
+    description="Small FastAPI service used to a Docker-based CI/CD process.",
 )
 
 

@@ -1,6 +1,6 @@
-# FastAPI CI/CD Demo
+# FastAPI CI/CD
 
-Minimal demo project showing a Python FastAPI service packaged as a Docker image and built through GitHub Actions.
+Minimal project showing a Python FastAPI service packaged as a Docker image and built through GitHub Actions.
 
 ## Local development
 
@@ -34,21 +34,22 @@ pytest
 Build and run the container locally:
 
 ```bash
-docker build -t fastapi-demo .
-docker run --rm -p 8000:8000 fastapi-demo
+docker build -t fastapi-app .
+docker run --rm -p 8000:8000 fastapi-app
 ```
 
 ## CI/CD
 
 The workflow in `.github/workflows/ci-cd.yml` does two things:
 
-1. Installs Python dependencies and runs tests.
-2. Builds the Docker image and publishes it to GitHub Container Registry on `push` events.
+1. Validates the Python app with Ruff, pytest, and pip-audit.
+2. Builds the Docker image, starts it, and checks `/health`.
+3. Publishes the image to GitHub Container Registry on `push` events.
 
 Image name:
 
 ```text
-ghcr.io/<owner>/<repo>/fastapi-demo
+ghcr.io/<owner>/<repo>/fastapi-app
 ```
 
 Typical tags:

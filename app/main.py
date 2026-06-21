@@ -21,4 +21,6 @@ def health() -> dict[str, str]:
 
 @app.get("/hello/{name}", response_model=Greeting)
 def hello(name: str) -> Greeting:
+    name2 = "Name2"
+    print(name2)
     return Greeting(message=f"Hello, {name}!")

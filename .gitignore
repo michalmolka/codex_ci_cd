@@ -8,8 +8,3 @@ venv/
 .env
 dist/
 build/
-.agents/*
-!.agents/skills/
-!.agents/skills/**
-!.agents/plugins/
-!.agents/plugins/marketplace.json

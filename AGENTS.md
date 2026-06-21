@@ -2,8 +2,8 @@
 
 ## Project purpose
 
-This repository is a small learning lab for Codex, FastAPI, Docker, GitHub Actions,
-and CI/CD. Keep the project intentionally simple: one FastAPI app, tests, a
+This repository is a small lab for Codex. Stack: FastAPI, Docker, GitHub Actions CI CD. 
+Keep the project intentionally simple: one FastAPI app, tests, a
 Dockerfile, and one workflow that validates the app and publishes a container image.
 
 The application exposes:
@@ -19,7 +19,6 @@ The application exposes:
 - `.github/workflows/ci-cd.yml` validates the app and publishes the image.
 - `.agents/skills/` contains local Codex skills used to demonstrate repeatable
   PR and CI/CD workflows.
-- `docs/` contains article/demo notes about Codex agents, skills, and this lab.
 - `requirements.txt` contains runtime dependencies.
 - `requirements-dev.txt` contains development and CI dependencies.
 
@@ -35,8 +34,7 @@ Use this repo to show three Codex concepts clearly:
   a pull request appears ready to approve or merge.
 
 Keep these concepts separate in explanations. `AGENTS.md` sets the rules, skills
-describe repeatable task workflows, and plugins or automations should be treated
-as optional next steps unless the user asks to build them.
+describe repeatable task workflows.
 
 ## Collaboration rules
 

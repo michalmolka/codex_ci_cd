@@ -1,0 +1,4 @@
+interface:
+  display_name: "Check PR CI/CD"
+  short_description: "Checklist of CI/CD stages for a PR"
+  default_prompt: "Use $check-pr-cicd to summarize the CI/CD checklist and overall status for PR #123."

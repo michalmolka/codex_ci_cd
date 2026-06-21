@@ -1,0 +1,4 @@
+interface:
+  display_name: "Assess PR Readiness"
+  short_description: "Evaluate whether a pull request is ready to approve and merge."
+  default_prompt: "$assess-pr-readiness evaluate PR #1"

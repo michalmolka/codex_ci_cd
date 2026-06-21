@@ -15,7 +15,8 @@ class Greeting(BaseModel):
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok"}
+    status_val = "ok"
+    return {"status": status_val}
 
 
 @app.get("/hello/{name}", response_model=Greeting)

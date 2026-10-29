@@ -1,6 +1,16 @@
-# FastAPI CI/CD
+# FastAPI CI/CD & Codex Agent Lab
 
-Minimal project showing a Python FastAPI service packaged as a Docker image and built through GitHub Actions.
+A minimal lab demonstrating a containerized FastAPI application with a complete GitHub Actions CI/CD pipeline, paired with OpenAI Codex agent instructions and custom PR skills.
+
+## What This Repository Contains
+
+- **FastAPI Application (`app/`)**: A clean and lightweight Python web service exposing health check (`/health`) and greeting (`/hello/{name}`) endpoints.
+- **Automated CI/CD Pipeline (`.github/workflows/ci-cd.yml`)**: GitHub Actions workflow that automatically runs Ruff linting/formatting, Pytest suites, dependency vulnerability audits (`pip-audit`), container build, and runtime smoke testing before publishing images to GitHub Container Registry (GHCR).
+- **Docker Packaging (`Dockerfile`)**: Standard containerization configuration for production and local environments.
+- **Codex Agent Integration (`AGENTS.md` & `.agents/skills/`)**:
+  - `AGENTS.md`: Repository instructions and collaboration rules for AI coding assistants.
+  - `check-pr-cicd`: Specialized agent skill for checking and auditing pull request CI/CD pipeline stages.
+  - `assess-pr-readiness`: Agent skill to evaluate pull requests for merge readiness and diff risks.
 
 ## Local development
 
